@@ -29,13 +29,13 @@ class Reading(BaseModel):
 @app.post("/reading")
 async def create_reading(reading: Reading):
     try:
-        # Generate a unique 10-digit random number for reading_num
-        reading_num = str(random.randint(10**9, 10**10 - 1))  # 10-digit random number
+        
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S%f")
 
         # Create a new document in Firestore
-        doc_ref = db.collection('sensor_readings').document(reading_num)
+        doc_ref = db.collection('sensor_readings').document(timestamp)
         doc_ref.set({
-            'reading_num': reading_num,
+            'reading_num': timestamp,
             'bpm': reading.bpm,
             'sp02': reading.sp02
         })
